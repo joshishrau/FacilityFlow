@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css';
+import "react-calendar/dist/Calendar.css";
 import "./CalendarSlotSelector.css";
 
 export default function CalendarSlotSelector({ onSelect }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [showSlots, setShowSlots] = useState(false);
+  const [selectedSlots, setSelectedSlots] = useState([]);
 
   // generate hourly slots (9 AM - 5 PM)
   const generateHourlySlots = (startHour, endHour) => {
@@ -21,19 +22,51 @@ export default function CalendarSlotSelector({ onSelect }) {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     setShowSlots(true);
+    setSelectedSlots([]);
   };
+
+
+  // Helper to get slot index
+  const getSlotIndex = (slot) => slots.indexOf(slot);
 
   const handleSlotClick = (slot) => {
-    // Pass selected date and slot to App.jsx
-    onSelect(selectedDate.toISOString().split("T")[0], slot);
+    if (selectedSlots.includes(slot)) {
+      // Deselect
+      setSelectedSlots(selectedSlots.filter(s => s !== slot));
+    } else {
+      if (selectedSlots.length === 0) {
+        setSelectedSlots([slot]);
+      } else {
+        // Check if new slot is continuous with current selection
+        const indices = selectedSlots.map(getSlotIndex).sort((a, b) => a - b);
+        const newIndex = getSlotIndex(slot);
+        const min = indices[0];
+        const max = indices[indices.length - 1];
+        if (newIndex === min - 1 || newIndex === max + 1) {
+          // Allow only if new slot is adjacent
+          setSelectedSlots(
+            newIndex < min
+              ? [slot, ...selectedSlots]
+              : [...selectedSlots, slot]
+          );
+        } else {
+          // Not continuous, reset to only this slot
+          setSelectedSlots([slot]);
+        }
+      }
+    }
   };
 
-  const slots = generateHourlySlots(9, 18);
+  const slots = generateHourlySlots(9, 18); // 9 AM - 6 PM
 
   return (
     <div className="calendar-container">
       <h2>Select Date</h2>
-      <Calendar onChange={handleDateChange} value={selectedDate} />
+      <Calendar 
+        onChange={handleDateChange}
+        value={selectedDate}
+        minDate={new Date()}
+      />
 
       {showSlots && (
         <div className="slots-container">
@@ -42,13 +75,21 @@ export default function CalendarSlotSelector({ onSelect }) {
             {slots.map((slot, index) => (
               <button
                 key={index}
-                className="slot-btn"
+                className={`slot-btn ${selectedSlots.includes(slot) ? 'selected' : ''}`}
                 onClick={() => handleSlotClick(slot)}
               >
                 {slot}
               </button>
             ))}
           </div>
+
+          <button
+            className="confirm-btn"
+            onClick={() => onSelect(selectedDate.toISOString().split("T")[0], selectedSlots)}
+            disabled={selectedSlots.length === 0}
+          >
+            Confirm Slots
+          </button>
         </div>
       )}
     </div>
