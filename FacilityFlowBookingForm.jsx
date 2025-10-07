@@ -5,23 +5,22 @@ export default function FacilityFlowBookingForm({ dateTime }) {
   const [formData, setFormData] = useState({
     department: "",
     event_name: "",
-    event_date: dateTime?.date || "",
-    slot: dateTime?.time || "",
+    event_date: "",
+    slots: [],
     visitors: "",
     total_persons: "",
     faculty_staff: "",
     contact_number: "",
-    peon_name: "",
+    peon_name: ""
   });
 
   useEffect(() => {
-    // Update formData when dateTime changes
     if (dateTime) {
-      setFormData((prev) => ({
-        ...prev,
+      setFormData({
+        ...formData,
         event_date: dateTime.date,
-        slot: dateTime.time,
-      }));
+        slots: dateTime.slots
+      });
     }
   }, [dateTime]);
 
@@ -32,19 +31,19 @@ export default function FacilityFlowBookingForm({ dateTime }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    console.log("Booking submitted:", formData);
     alert("Booking Submitted!");
   };
 
   return (
     <div className="form-container">
-      <h2>Facility Flow - Event Booking</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="booking-form" onSubmit={handleSubmit}>
+        <h2>Facility Flow - Event Booking</h2>
         <label>Day/Date:</label>
         <input type="date" name="event_date" value={formData.event_date} readOnly />
 
-        <label>Slot:</label>
-        <input type="text" name="slot" value={formData.slot} readOnly />
+        <label>Selected Slots:</label>
+        <input type="text" name="slots" value={formData.slots.join(", ")} readOnly />
 
         <label>Name of Department:</label>
         <input type="text" name="department" value={formData.department} onChange={handleChange} required />
