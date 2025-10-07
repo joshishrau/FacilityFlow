@@ -1,0 +1,75 @@
+/* App.css - Global styles for Facility Flow Booking */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: #2d3a4b;
+  margin-top: 32px;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+
+.app-container {
+  max-width: 480px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+  padding: 32px 24px 24px 24px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2d3a4b;
+  font-weight: 500;
+}
+
+input, select, textarea, button {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #4f8cff;
+  outline: none;
+}
+
+button {
+  background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+}
+
+button:hover {
+  background: linear-gradient(90deg, #38b6ff 0%, #4f8cff 100%);
+  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 18px 6px 12px 6px;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+}
