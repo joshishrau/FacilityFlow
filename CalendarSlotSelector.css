@@ -1,34 +1,69 @@
 .calendar-container {
-  max-width: 700px;
-  margin: 30px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-width: 420px;
+  margin: 36px auto;
+  padding: 28px 20px 20px 20px;
+  background: #fff;
+  border-radius: 16px;
+  text-align: left;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.10);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .slots-container {
-  margin-top: 20px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .slots-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-top: 15px;
 }
 
 .slot-btn {
-  padding: 10px;
-  background: #007bff;
-  color: white;
+  padding: 12px 0;
+  background: #4f8cff;
+  color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, box-shadow 0.2s;
+  font-size: 1.08rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
 }
 
 .slot-btn:hover {
-  background: #0056b3;
+  background: #38b6ff;
+}
+
+.slot-btn.selected {
+  background: #28a745;
+  color: #fff;
+}
+
+.confirm-btn {
+  margin-top: 22px;
+  padding: 12px 0;
+  width: 100%;
+  background: linear-gradient(90deg, #a259c6 0%, #6d38ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+}
+
+.confirm-btn:disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: not-allowed;
 }
